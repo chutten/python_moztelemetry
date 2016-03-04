@@ -462,6 +462,11 @@ def _get_ping_properties(ping, paths, only_median, with_processes,
                     result[property_name] = None
                     continue
 
+                if with_processes:
+                    children = cursor.get("childPayloads", {}) if type(cursor) == dict else {}
+                    child_keys = [key for key in keys for keys in for keys in child.get("keyedHistograms", {}).get(path[1], {}).keys() for child in children]
+                    kh_keys = list(set(kh_keys + child_keys))
+
                 if kh_keys:
                     kh_histograms = {}
                     for kh_key in kh_keys:
